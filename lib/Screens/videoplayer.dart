@@ -4,7 +4,8 @@ import 'package:video_player/video_player.dart';
 
 
 class VideoPlayerCustum extends StatefulWidget {
-  const VideoPlayerCustum( {Key? key}) : super(key: key);
+  final String videoUrl;
+  const VideoPlayerCustum( this.videoUrl,  {Key? key}) : super(key: key);
 
 
   @override
@@ -12,7 +13,7 @@ class VideoPlayerCustum extends StatefulWidget {
 }
 
 class _VideoPlayerCustumState extends State<VideoPlayerCustum> {
-
+  late String value;
   late VideoPlayerController _controller;
   late Future<void> _video;
 
@@ -22,18 +23,21 @@ class _VideoPlayerCustumState extends State<VideoPlayerCustum> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network("https://player.vimeo.com/external/372329292.sd.mp4?s=3f575ae7baaa13104a8b3583d210034176ee23d8&profile_id=164&oauth2_token_id=57447761");
+    value = widget.videoUrl;
+    _controller = VideoPlayerController.network(value);
     _video = _controller.initialize();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("see your target"),
         backgroundColor: Colors.black,
       ),
-      body: FutureBuilder(
+      body:
+      FutureBuilder(
         future: _video,
         builder: (context,snapshot)
         {
